@@ -989,5 +989,91 @@ img {
     color: #444;
 }
     
+/* L'overlay che blocca il sito */
+.full-screen-overlay {
+    position: fixed; /* Fondamentale: resta fermo anche se scorri */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Larghezza intero schermo */
+    height: 100vh; /* Altezza intero schermo */
+    background-color: rgba(0, 0, 0, 0.98); /* Nero quasi totale */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999; /* Numero altissimo per stare sopra a OGNI header */
+    backdrop-filter: blur(10px); /* Sfoca il sito dietro */
 }
 
+/* Il box centrale */
+.age-gate-modal {
+    background: #111;
+    color: white;
+    padding: 40px 20px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    border: 2px solid gold;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
+}
+
+.age-badge {
+    background: gold;
+    color: black;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0 auto 20px;
+}
+
+.age-gate-modal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.age-gate-modal p {
+    color: #bbb;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+/* Bottoni */
+.age-gate-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-age {
+    padding: 18px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-yes {
+    background: gold;
+    color: black;
+}
+
+.btn-yes:hover {
+    background: white;
+    transform: scale(1.03);
+}
+
+.btn-no {
+    background: transparent;
+    color: #777;
+    text-decoration: underline;
+}
+}
