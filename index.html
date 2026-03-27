@@ -24,26 +24,23 @@
     </div>
 </div>
 <script>
-    // Funzione globale per il click
-    function verifyAge(isOfAge) {
-        if (isOfAge) {
-            const overlay = document.getElementById('age-gate-container');
-            if (overlay) {
-                overlay.style.display = 'none';
-                localStorage.setItem('age_verified_cas', 'true');
-            }
-        } else {
-            window.location.href = "https://www.google.com";
-        }
+  function verifyAge(isOfAge) {
+    if (isOfAge) {
+        const overlay = document.getElementById('age-gate-container');
+        // Usiamo setProperty per forzare il !important anche via JS
+        overlay.style.setProperty('display', 'none', 'important');
+        localStorage.setItem('user_verified_365', 'true');
+    } else {
+        window.location.href = "https://www.google.com";
     }
+  }
 
-    // Controllo all'avvio senza usare window.onload (più sicuro)
-    document.addEventListener("DOMContentLoaded", function() {
-        if (localStorage.getItem('age_verified_cas') === 'true') {
-            const overlay = document.getElementById('age-gate-container');
-            if (overlay) overlay.style.display = 'none';
-        }
-    });
+  // Controllo al caricamento
+  document.addEventListener("DOMContentLoaded", function() {
+    if (localStorage.getItem('user_verified_365') === 'true') {
+        document.getElementById('age-gate-container').style.setProperty('display', 'none', 'important');
+    }
+  });
 </script>
  
   
