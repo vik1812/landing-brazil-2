@@ -25,12 +25,12 @@
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.98) !important;
-    display: flex !important;
+    display: flex; 
     justify-content: center !important;
     align-items: center !important;
-    z-index: 99999999 !important;
+    z-index: 999999999 !important;
     backdrop-filter: blur(10px) !important;
+    background-color: rgba(0, 0, 0, 0.98) !important;
 }
 
 .age-gate-modal {
