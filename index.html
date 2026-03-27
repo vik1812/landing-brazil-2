@@ -11,36 +11,52 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- POPUP VERIFICA ETÀ -->
-<div id="age-verify-overlay" class="age-overlay">
-    <div class="age-box">
-        <img src="https://img.icons8.com/ios-filled/50/d35400/18-plus.png" alt="18+" style="margin-bottom: 15px;">
-        <h2>VOCÊ TEM MAIS DE 18 ANOS?</h2>
-        <p>Para entrar e girar a roleta, você deve confirmar que possui a idade legal para apostas.</p>
-        <div class="age-buttons">
-            <button class="age-btn age-yes" onclick="confirmAge()">SIM, TENHO 18+</button>
-            <button class="age-btn age-no" onclick="exitPage()">NÃO, SOU MENOR</button>
+<!-- AGE VERIFICATION POPUP -->
+<div id="age-gate" class="age-gate-overlay">
+    <div class="age-gate-box">
+        <!-- Icona 18+ (Opzionale) -->
+        <div class="age-icon">18+</div>
+        
+        <h2>VERIFICAÇÃO DE IDADE</h2>
+        <p>Este site contém conteúdo de apostas e jogos de azar. Por favor, confirme que você tem pelo menos 18 anos de idade para entrar.</p>
+        
+        <div class="age-gate-buttons">
+            <button class="btn-age btn-confirm" onclick="allowAccess()">SIM, TENHO 18+ ANOS</button>
+            <button class="btn-age btn-exit" onclick="denyAccess()">NÃO, SOU MENOR</button>
+        </div>
+        
+        <div class="age-footer">
+            Ao entrar, você concorda com nossos Termos e Jogo Responsável.
         </div>
     </div>
 </div>
 <script>
-  function confirmAge() {
-    // Nasconde il popup con una transizione fluida
-    const overlay = document.getElementById('age-verify-overlay');
-    overlay.style.transition = 'opacity 0.5s ease';
-    overlay.style.opacity = '0';
+  function allowAccess() {
+    const ageGate = document.getElementById('age-gate');
+    
+    // Effetto dissolvenza in uscita
+    ageGate.style.transition = 'opacity 0.5s ease';
+    ageGate.style.opacity = '0';
     
     setTimeout(() => {
-        overlay.style.display = 'none';
-        // Opzionale: Fa partire le monete solo dopo la conferma
-        createCoins(); 
+        ageGate.style.display = 'none';
+        // Opzionale: salva la scelta in un cookie o localStorage 
+        // per non romperlo all'utente ogni volta che cambia pagina
+        localStorage.setItem('age_verified', 'true');
     }, 500);
 }
 
-function exitPage() {
-    // Reindirizza l'utente a Google o a una pagina di gioco responsabile
+function denyAccess() {
+    // Reindirizza a Google o a una pagina di informazione sul gioco d'azzardo
     window.location.href = "https://www.google.com";
 }
+
+// Controllo automatico: se ha già confermato, non mostrare il popup
+window.addEventListener('DOMContentLoaded', (event) => {
+    if (localStorage.getItem('age_verified') === 'true') {
+        document.getElementById('age-gate').style.display = 'none';
+    }
+});
 </script>  
   
   <header class="site-header">
