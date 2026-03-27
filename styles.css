@@ -891,3 +891,71 @@ img {
     line-height: 1.6;
   }
 }
+
+/* Stile del Popup Age Verify */
+.age-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Sfondo scuro coprente */
+    backdrop-filter: blur(15px); /* Sfoca lo sfondo dell'Olimpo per curiosità */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Sopra a tutto il resto */
+}
+
+.age-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    border: 3px solid gold;
+    box-shadow: 0 0 50px rgba(211, 84, 0, 0.3);
+}
+
+.age-box h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.age-box p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.age-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.age-btn {
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.age-yes {
+    background: #27ae60;
+    color: white;
+    box-shadow: 0 4px 0 #1e8449;
+}
+.age-yes:hover { background: #2ecc71; transform: scale(1.02); }
+
+.age-no {
+    background: #e74c3c;
+    color: white;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+.age-no:hover { opacity: 1; }
