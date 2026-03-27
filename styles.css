@@ -101,6 +101,23 @@
     transform: scale(1.02);
 }
 
+.btn-yes {
+    background: gold;
+    color: black;
+}
+
+.btn-yes:hover {
+    background: white;
+    transform: scale(1.03);
+}
+
+.btn-no {
+    background: transparent;
+    color: #777;
+    text-decoration: underline;
+}
+
+
 .btn-exit {
     background: transparent;
     color: #666;
