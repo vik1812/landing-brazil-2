@@ -11,6 +11,18 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- POPUP VERIFICA ETÀ -->
+<div id="age-verify-overlay" class="age-overlay">
+    <div class="age-box">
+        <img src="https://img.icons8.com/ios-filled/50/d35400/18-plus.png" alt="18+" style="margin-bottom: 15px;">
+        <h2>VOCÊ TEM MAIS DE 18 ANOS?</h2>
+        <p>Para entrar e girar a roleta, você deve confirmar que possui a idade legal para apostas.</p>
+        <div class="age-buttons">
+            <button class="age-btn age-yes" onclick="confirmAge()">SIM, TENHO 18+</button>
+            <button class="age-btn age-no" onclick="exitPage()">NÃO, SOU MENOR</button>
+        </div>
+    </div>
+</div>
   <header class="site-header">
   <div class="site-header__container">
     <a href="/" class="site-logo">
