@@ -11,52 +11,39 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<!-- AGE VERIFICATION POPUP -->
-<div id="age-gate" class="age-gate-overlay">
-    <div class="age-gate-box">
-        <!-- Icona 18+ (Opzionale) -->
-        <div class="age-icon">18+</div>
-        
+<div id="age-gate-container" class="full-screen-overlay">
+    <div class="age-gate-modal">
+        <div class="age-badge">18+</div>
         <h2>VERIFICAÇÃO DE IDADE</h2>
-        <p>Este site contém conteúdo de apostas e jogos de azar. Por favor, confirme que você tem pelo menos 18 anos de idade para entrar.</p>
+        <p>Este site contém conteúdo de apostas. <br> Você confirma que tem mais de 18 anos?</p>
         
-        <div class="age-gate-buttons">
-            <button class="btn-age btn-confirm" onclick="allowAccess()">SIM, TENHO 18+ ANOS</button>
-            <button class="btn-age btn-exit" onclick="denyAccess()">NÃO, SOU MENOR</button>
-        </div>
-        
-        <div class="age-footer">
-            Ao entrar, você concorda com nossos Termos e Jogo Responsável.
+        <div class="age-gate-actions">
+            <button class="btn-age btn-yes" onclick="verifyAge(true)">SIM, EU TENHO 18+</button>
+            <button class="btn-age btn-no" onclick="verifyAge(false)">NÃO, SAIR</button>
         </div>
     </div>
 </div>
 <script>
-  function allowAccess() {
-    const ageGate = document.getElementById('age-gate');
-    
-    // Effetto dissolvenza in uscita
-    ageGate.style.transition = 'opacity 0.5s ease';
-    ageGate.style.opacity = '0';
-    
-    setTimeout(() => {
-        ageGate.style.display = 'none';
-        // Opzionale: salva la scelta in un cookie o localStorage 
-        // per non romperlo all'utente ogni volta che cambia pagina
-        localStorage.setItem('age_verified', 'true');
-    }, 500);
-}
-
-function denyAccess() {
-    // Reindirizza a Google o a una pagina di informazione sul gioco d'azzardo
-    window.location.href = "https://www.google.com";
-}
-
-// Controllo automatico: se ha già confermato, non mostrare il popup
-window.addEventListener('DOMContentLoaded', (event) => {
-    if (localStorage.getItem('age_verified') === 'true') {
-        document.getElementById('age-gate').style.display = 'none';
+  function verifyAge(isOfAge) {
+    if (isOfAge) {
+        // Nascondi il popup
+        const overlay = document.getElementById('age-gate-container');
+        overlay.style.display = 'none';
+        
+        // Opzionale: Impedisce che riappaia al refresh della pagina
+        localStorage.setItem('verified', 'true');
+    } else {
+        // Se è minore, mandalo via (es. Google)
+        window.location.href = "https://www.google.com";
     }
-});
+}
+
+// Controlla se l'utente ha già verificato l'età in precedenza
+window.onload = function() {
+    if (localStorage.getItem('verified') === 'true') {
+        document.getElementById('age-gate-container').style.display = 'none';
+    }
+}
 </script>  
   
   <header class="site-header">
