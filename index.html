@@ -24,27 +24,28 @@
     </div>
 </div>
 <script>
-  function verifyAge(isOfAge) {
-    if (isOfAge) {
-        // Nascondi il popup
-        const overlay = document.getElementById('age-gate-container');
-        overlay.style.display = 'none';
-        
-        // Opzionale: Impedisce che riappaia al refresh della pagina
-        localStorage.setItem('verified', 'true');
-    } else {
-        // Se è minore, mandalo via (es. Google)
-        window.location.href = "https://www.google.com";
+    // Funzione globale per il click
+    function verifyAge(isOfAge) {
+        if (isOfAge) {
+            const overlay = document.getElementById('age-gate-container');
+            if (overlay) {
+                overlay.style.display = 'none';
+                localStorage.setItem('age_verified_cas', 'true');
+            }
+        } else {
+            window.location.href = "https://www.google.com";
+        }
     }
-}
 
-// Controlla se l'utente ha già verificato l'età in precedenza
-window.onload = function() {
-    if (localStorage.getItem('verified') === 'true') {
-        document.getElementById('age-gate-container').style.display = 'none';
-    }
-}
-</script>  
+    // Controllo all'avvio senza usare window.onload (più sicuro)
+    document.addEventListener("DOMContentLoaded", function() {
+        if (localStorage.getItem('age_verified_cas') === 'true') {
+            const overlay = document.getElementById('age-gate-container');
+            if (overlay) overlay.style.display = 'none';
+        }
+    });
+</script>
+ 
   
   <header class="site-header">
   <div class="site-header__container">
