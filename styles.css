@@ -16,6 +16,108 @@
   --container: 1180px;
 }
 
+/* L'overlay che DEVE coprire tutto */
+.full-screen-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.96) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 999999999 !important; /* Numero esagerato per sicurezza */
+    backdrop-filter: blur(10px) !important;
+    visibility: visible !important;
+}
+
+/* Il box centrale deve essere staccato dal resto */
+.age-gate-modal {
+    position: relative !important;
+    background: #111 !important;
+    color: white !important;
+    padding: 40px !important;
+    border-radius: 20px !important;
+    border: 2px solid gold !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    text-align: center !important;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
+}
+  
+
+.age-icon {
+    background: #ffd700;
+    color: #000;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0 auto 20px;
+}
+
+.age-gate-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.age-gate-box p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+/* Pulsanti */
+.age-gate-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-age {
+    padding: 16px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-confirm {
+    background: #ffd700;
+    color: #000;
+}
+.btn-confirm:hover {
+    background: #fff;
+    transform: scale(1.02);
+}
+
+.btn-exit {
+    background: transparent;
+    color: #666;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+.btn-exit:hover {
+    color: #e74c3c;
+}
+
+.age-footer {
+    margin-top: 25px;
+    font-size: 0.75rem;
+    color: #444;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -256,11 +358,6 @@ img {
   transform: translateY(-2px);
   opacity: 0.95;
 }
-
-
-
-
-
 
 .rating {
   color: #ffd76a;
@@ -889,195 +986,5 @@ img {
   .responsible-gaming__text {
     font-size: 14px;
     line-height: 1.6;
-  }
-
-
-/* L'overlay che DEVE coprire tutto */
-.full-screen-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.96) !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    z-index: 999999999 !important; /* Numero esagerato per sicurezza */
-    backdrop-filter: blur(10px) !important;
-    visibility: visible !important;
-}
-
-/* Il box centrale deve essere staccato dal resto */
-.age-gate-modal {
-    position: relative !important;
-    background: #111 !important;
-    color: white !important;
-    padding: 40px !important;
-    border-radius: 20px !important;
-    border: 2px solid gold !important;
-    max-width: 400px !important;
-    width: 90% !important;
-    text-align: center !important;
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
-}
-  
-
-.age-icon {
-    background: #ffd700;
-    color: #000;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin: 0 auto 20px;
-}
-
-.age-gate-box h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-}
-
-.age-gate-box p {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #ccc;
-    margin-bottom: 30px;
-}
-
-/* Pulsanti */
-.age-gate-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.btn-age {
-    padding: 16px;
-    border-radius: 10px;
-    border: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-}
-
-.btn-confirm {
-    background: #ffd700;
-    color: #000;
-}
-.btn-confirm:hover {
-    background: #fff;
-    transform: scale(1.02);
-}
-
-.btn-exit {
-    background: transparent;
-    color: #666;
-    text-decoration: underline;
-    font-size: 0.9rem;
-}
-.btn-exit:hover {
-    color: #e74c3c;
-}
-
-.age-footer {
-    margin-top: 25px;
-    font-size: 0.75rem;
-    color: #444;
-}
-    
-/* L'overlay che blocca il sito */
-.full-screen-overlay {
-    position: fixed; /* Fondamentale: resta fermo anche se scorri */
-    top: 0;
-    left: 0;
-    width: 100vw; /* Larghezza intero schermo */
-    height: 100vh; /* Altezza intero schermo */
-    background-color: rgba(0, 0, 0, 0.98); /* Nero quasi totale */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999999; /* Numero altissimo per stare sopra a OGNI header */
-    backdrop-filter: blur(10px); /* Sfoca il sito dietro */
-}
-
-/* Il box centrale */
-.age-gate-modal {
-    background: #111;
-    color: white;
-    padding: 40px 20px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    border: 2px solid gold;
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-}
-
-.age-badge {
-    background: gold;
-    color: black;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin: 0 auto 20px;
-}
-
-.age-gate-modal h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
-
-.age-gate-modal p {
-    color: #bbb;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-
-/* Bottoni */
-.age-gate-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.btn-age {
-    padding: 18px;
-    border-radius: 12px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: 0.3s;
-    text-transform: uppercase;
-}
-
-.btn-yes {
-    background: gold;
-    color: black;
-}
-
-.btn-yes:hover {
-    background: white;
-    transform: scale(1.03);
-}
-
-.btn-no {
-    background: transparent;
-    color: #777;
-    text-decoration: underline;
-}
+  }   
 }
