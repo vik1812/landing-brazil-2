@@ -23,6 +23,26 @@
         </div>
     </div>
 </div>
+<script>
+  function confirmAge() {
+    // Nasconde il popup con una transizione fluida
+    const overlay = document.getElementById('age-verify-overlay');
+    overlay.style.transition = 'opacity 0.5s ease';
+    overlay.style.opacity = '0';
+    
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        // Opzionale: Fa partire le monete solo dopo la conferma
+        createCoins(); 
+    }, 500);
+}
+
+function exitPage() {
+    // Reindirizza l'utente a Google o a una pagina di gioco responsabile
+    window.location.href = "https://www.google.com";
+}
+</script>  
+  
   <header class="site-header">
   <div class="site-header__container">
     <a href="/" class="site-logo">
