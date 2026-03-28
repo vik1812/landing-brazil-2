@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 24px;
+      color: #1f2937;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .grid-full {
+      grid-column: 1 / -1;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #111827;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: #fff;
+      width: auto;
+      padding: 10px 14px;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bookmaker-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .bookmaker-item img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+    }
+
+    .bookmaker-left {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .muted {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Painel Admin</h1>
+
+    <div id="messageBox" class="message hidden"></div>
+
+    <div id="loginCard" class="card">
+      <h2>Login admin</h2>
+      <div class="grid">
+        <div>
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="La tua email admin" />
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="La tua password" />
+        </div>
+        <div class="grid-full row-actions">
+          <button class="btn-primary" id="loginBtn">Entrar</button>
+          <button class="btn-secondary" id="logoutBtn" type="button">Sair</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="adminPanel" class="hidden">
+      <div class="card">
+        <h2>Aggiungi bookmaker</h2>
+        <form id="bookmakerForm">
+          <div class="grid">
+            <div>
+              <label>Nome</label>
+              <input type="text" id="name" required />
+            </div>
+            <div>
+              <label>Slug</label>
+              <input type="text" id="slug" required />
+            </div>
+            <div>
+              <label>Logo URL</label>
+              <input type="text" id="logo_url" />
+            </div>
+            <div>
+              <label>Rating</label>
+              <input type="number" step="0.1" id="rating" />
+            </div>
+            <div class="grid-full">
+              <label>Descrizione breve</label>
+              <textarea id="short_description"></textarea>
+            </div>
+            <div>
+              <label>Titolo promo</label>
+              <input type="text" id="promo_title" />
+            </div>
+            <div>
+              <label>Testo promo</label>
+              <input type="text" id="promo_text" />
+            </div>
+            <div>
+              <label>Affiliate link</label>
+              <input type="text" id="affiliate_link" required />
+            </div>
+            <div>
+              <label>Review link</label>
+              <input type="text" id="review_link" />
+            </div>
+            <div>
+              <label>Ordine ranking</label>
+              <input type="number" id="rank_order" required />
+            </div>
+            <div>
+              <label>Attivo</label>
+              <select id="is_active">
+                <option value="true">Sì</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div class="grid-full">
+              <button class="btn-primary" type="submit">Salva bookmaker</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Bookmaker esistenti</h2>
+        <div id="bookmakersAdminList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+
+    const supabaseUrl = 'https://zmushwvwnmirnhbqvswv.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptdXNod3Z3bm1pcm5oYnF2c3d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MTQxNTUsImV4cCI6MjA5MDI5MDE1NX0.9Hi630N-tJ7xDOD88KZLRvjHjLxPtQlaAFAxni1NTN8'
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    const loginCard = document.getElementById('loginCard')
+    const adminPanel = document.getElementById('adminPanel')
+    const loginBtn = document.getElementById('loginBtn')
+    const logoutBtn = document.getElementById('logoutBtn')
+    const messageBox = document.getElementById('messageBox')
+    const bookmakersAdminList = document.getElementById('bookmakersAdminList')
+    const bookmakerForm = document.getElementById('bookmakerForm')
+
+    function showMessage(text, type = 'success') {
+      messageBox.textContent = text
+      messageBox.className = `message ${type}`
+      messageBox.classList.remove('hidden')
+    }
+
+    function hideMessage() {
+      messageBox.classList.add('hidden')
+    }
+
+    async function checkSession() {
+      const { data } = await supabase.auth.getSession()
+      const session = data.session
+
+      if (session) {
+        loginCard.classList.add('hidden')
+        adminPanel.classList.remove('hidden')
+        loadAdminBookmakers()
+      } else {
+        loginCard.classList.remove('hidden')
+        adminPanel.classList.add('hidden')
+      }
+    }
+
+    loginBtn.addEventListener('click', async () => {
+      hideMessage()
+
+      const email = document.getElementById('loginEmail').value.trim()
+      const password = document.getElementById('loginPassword').value.trim()
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
+
+      if (error) {
+        showMessage(error.message, 'error')
+        return
+      }
+
+      showMessage('Login effettuato con successo')
+      checkSession()
+    })
+
+    logoutBtn.addEventListener('click', async () => {
+      await supabase.auth.signOut()
+      showMessage('Logout effettuato')
+      checkSession()
+    })
+
+    async function loadAdminBookmakers() {
+      const { data, error } = await supabase
+        .from('bookmakers')
+        .select('*')
+        .order('rank_order', { ascending: true })
+
+      if (error) {
+        showMessage(error.message, 'error')
+        return
+      }
+
+      bookmakersAdminList.innerHTML = ''
+
+      if (!data || data.length === 0) {
+        bookmakersAdminList.innerHTML = '<p>Nessun bookmaker presente.</p>'
+        return
+      }
+
+      data.forEach((bookmaker) => {
+        const item = document.createElement('div')
+        item.className = 'bookmaker-item'
+
+        item.innerHTML = `
+          <div class="bookmaker-left">
+            <img src="${bookmaker.logo_url || 'https://via.placeholder.com/64'}" alt="${bookmaker.name}">
+            <div>
+              <strong>${bookmaker.name}</strong>
+              <div class="muted">Slug: ${bookmaker.slug}</div>
+              <div class="muted">Rank: ${bookmaker.rank_order} | Attivo: ${bookmaker.is_active ? 'Sì' : 'No'}</div>
+              <div class="muted">${bookmaker.short_description || ''}</div>
+            </div>
+          </div>
+          <div class="row-actions">
+            <button class="btn-danger" data-id="${bookmaker.id}">Elimina</button>
+          </div>
+        `
+
+        const deleteBtn = item.querySelector('.btn-danger')
+        deleteBtn.addEventListener('click', async () => {
+          const conferma = confirm(`Vuoi eliminare ${bookmaker.name}?`)
+          if (!conferma) return
+
+          const { error } = await supabase
+            .from('bookmakers')
+            .delete()
+            .eq('id', bookmaker.id)
+
+          if (error) {
+            showMessage(error.message, 'error')
+            return
+          }
+
+          showMessage('Bookmaker eliminato con successo')
+          loadAdminBookmakers()
+        })
+
+        bookmakersAdminList.appendChild(item)
+      })
+    }
+
+    bookmakerForm.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      hideMessage()
+
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        slug: document.getElementById('slug').value.trim(),
+        logo_url: document.getElementById('logo_url').value.trim(),
+        rating: document.getElementById('rating').value ? Number(document.getElementById('rating').value) : null,
+        short_description: document.getElementById('short_description').value.trim(),
+        promo_title: document.getElementById('promo_title').value.trim(),
+        promo_text: document.getElementById('promo_text').value.trim(),
+        affiliate_link: document.getElementById('affiliate_link').value.trim(),
+        review_link: document.getElementById('review_link').value.trim(),
+        rank_order: Number(document.getElementById('rank_order').value),
+        is_active: document.getElementById('is_active').value === 'true'
+      }
+
+      const { error } = await supabase
+        .from('bookmakers')
+        .insert([payload])
+
+      if (error) {
+        showMessage(error.message, 'error')
+        return
+      }
+
+      showMessage('Bookmaker salvato con successo')
+      bookmakerForm.reset()
+      loadAdminBookmakers()
+    })
+
+    checkSession()
+  </script>
+</body>
+</html>
