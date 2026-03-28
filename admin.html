@@ -231,6 +231,10 @@
               <label>Short Description</label>
               <textarea id="short_description"></textarea>
             </div>
+            <div class="grid-full">
+            <label>Features Text</label>
+            <input type="text" id="features_text" placeholder="Example: Fast payouts | Mobile app | Welcome bonus" />
+            </div>
             <div>
               <label>Promo Title</label>
               <input type="text" id="promo_title" />
@@ -318,6 +322,7 @@
       document.getElementById('logo_url').value = bookmaker.logo_url ?? ''
       document.getElementById('rating').value = bookmaker.rating ?? ''
       document.getElementById('short_description').value = bookmaker.short_description ?? ''
+      document.getElementById('features_text').value = bookmaker.features_text ?? ''
       document.getElementById('promo_title').value = bookmaker.promo_title ?? ''
       document.getElementById('promo_text').value = bookmaker.promo_text ?? ''
       document.getElementById('affiliate_link').value = bookmaker.affiliate_link ?? ''
