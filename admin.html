@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel Admin</title>
+  <title>Admin Panel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -75,6 +75,13 @@
       padding: 10px 14px;
     }
 
+    .btn-edit {
+      background: #2563eb;
+      color: #fff;
+      width: auto;
+      padding: 10px 14px;
+    }
+
     .btn-secondary {
       background: #e5e7eb;
       color: #111827;
@@ -84,6 +91,7 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .bookmaker-item {
@@ -137,39 +145,74 @@
       background: #fee2e2;
       color: #991b1b;
     }
+
+    .form-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bookmaker-item {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Painel Admin</h1>
+    <h1>Admin Panel</h1>
 
     <div id="messageBox" class="message hidden"></div>
 
     <div id="loginCard" class="card">
-      <h2>Login admin</h2>
+      <h2>Admin Login</h2>
       <div class="grid">
         <div>
           <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="La tua email admin" />
+          <input type="email" id="loginEmail" placeholder="Admin email" />
         </div>
         <div>
           <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="La tua password" />
+          <input type="password" id="loginPassword" placeholder="Admin password" />
         </div>
         <div class="grid-full row-actions">
-          <button class="btn-primary" id="loginBtn">Entrar</button>
-          <button class="btn-secondary" id="logoutBtn" type="button">Sair</button>
+          <button class="btn-primary" id="loginBtn" type="button">Login</button>
+          <button class="btn-secondary" id="logoutBtn" type="button">Logout</button>
         </div>
       </div>
     </div>
 
     <div id="adminPanel" class="hidden">
       <div class="card">
-        <h2>Aggiungi bookmaker</h2>
+        <div class="form-title-row">
+          <div>
+            <h2 id="formTitle">Add Bookmaker</h2>
+            <span id="editTag" class="tag hidden">Editing mode</span>
+          </div>
+          <button id="cancelEditBtn" class="btn-secondary hidden" type="button">Cancel Edit</button>
+        </div>
+
         <form id="bookmakerForm">
           <div class="grid">
             <div>
-              <label>Nome</label>
+              <label>Name</label>
               <input type="text" id="name" required />
             </div>
             <div>
@@ -185,45 +228,45 @@
               <input type="number" step="0.1" id="rating" />
             </div>
             <div class="grid-full">
-              <label>Descrizione breve</label>
+              <label>Short Description</label>
               <textarea id="short_description"></textarea>
             </div>
             <div>
-              <label>Titolo promo</label>
+              <label>Promo Title</label>
               <input type="text" id="promo_title" />
             </div>
             <div>
-              <label>Testo promo</label>
+              <label>Promo Text</label>
               <input type="text" id="promo_text" />
             </div>
             <div>
-              <label>Affiliate link</label>
+              <label>Affiliate Link</label>
               <input type="text" id="affiliate_link" required />
             </div>
             <div>
-              <label>Review link</label>
+              <label>Review Link</label>
               <input type="text" id="review_link" />
             </div>
             <div>
-              <label>Ordine ranking</label>
+              <label>Rank Order</label>
               <input type="number" id="rank_order" required />
             </div>
             <div>
-              <label>Attivo</label>
+              <label>Active</label>
               <select id="is_active">
-                <option value="true">Sì</option>
+                <option value="true">Yes</option>
                 <option value="false">No</option>
               </select>
             </div>
-            <div class="grid-full">
-              <button class="btn-primary" type="submit">Salva bookmaker</button>
+            <div class="grid-full row-actions">
+              <button class="btn-primary" type="submit" id="submitBtn">Save Bookmaker</button>
             </div>
           </div>
         </form>
       </div>
 
       <div class="card">
-        <h2>Bookmaker esistenti</h2>
+        <h2>Existing Bookmakers</h2>
         <div id="bookmakersAdminList"></div>
       </div>
     </div>
@@ -243,6 +286,12 @@
     const messageBox = document.getElementById('messageBox')
     const bookmakersAdminList = document.getElementById('bookmakersAdminList')
     const bookmakerForm = document.getElementById('bookmakerForm')
+    const formTitle = document.getElementById('formTitle')
+    const submitBtn = document.getElementById('submitBtn')
+    const cancelEditBtn = document.getElementById('cancelEditBtn')
+    const editTag = document.getElementById('editTag')
+
+    let editingId = null
 
     function showMessage(text, type = 'success') {
       messageBox.textContent = text
@@ -252,6 +301,37 @@
 
     function hideMessage() {
       messageBox.classList.add('hidden')
+    }
+
+    function resetForm() {
+      bookmakerForm.reset()
+      editingId = null
+      formTitle.textContent = 'Add Bookmaker'
+      submitBtn.textContent = 'Save Bookmaker'
+      cancelEditBtn.classList.add('hidden')
+      editTag.classList.add('hidden')
+    }
+
+    function fillForm(bookmaker) {
+      document.getElementById('name').value = bookmaker.name ?? ''
+      document.getElementById('slug').value = bookmaker.slug ?? ''
+      document.getElementById('logo_url').value = bookmaker.logo_url ?? ''
+      document.getElementById('rating').value = bookmaker.rating ?? ''
+      document.getElementById('short_description').value = bookmaker.short_description ?? ''
+      document.getElementById('promo_title').value = bookmaker.promo_title ?? ''
+      document.getElementById('promo_text').value = bookmaker.promo_text ?? ''
+      document.getElementById('affiliate_link').value = bookmaker.affiliate_link ?? ''
+      document.getElementById('review_link').value = bookmaker.review_link ?? ''
+      document.getElementById('rank_order').value = bookmaker.rank_order ?? ''
+      document.getElementById('is_active').value = bookmaker.is_active ? 'true' : 'false'
+
+      editingId = bookmaker.id
+      formTitle.textContent = `Edit Bookmaker: ${bookmaker.name}`
+      submitBtn.textContent = 'Update Bookmaker'
+      cancelEditBtn.classList.remove('hidden')
+      editTag.classList.remove('hidden')
+
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     async function checkSession() {
@@ -284,14 +364,19 @@
         return
       }
 
-      showMessage('Login effettuato con successo')
+      showMessage('Login successful')
       checkSession()
     })
 
     logoutBtn.addEventListener('click', async () => {
       await supabase.auth.signOut()
-      showMessage('Logout effettuato')
+      showMessage('Logged out successfully')
       checkSession()
+    })
+
+    cancelEditBtn.addEventListener('click', () => {
+      resetForm()
+      hideMessage()
     })
 
     async function loadAdminBookmakers() {
@@ -308,7 +393,7 @@
       bookmakersAdminList.innerHTML = ''
 
       if (!data || data.length === 0) {
-        bookmakersAdminList.innerHTML = '<p>Nessun bookmaker presente.</p>'
+        bookmakersAdminList.innerHTML = '<p>No bookmakers found.</p>'
         return
       }
 
@@ -322,19 +407,26 @@
             <div>
               <strong>${bookmaker.name}</strong>
               <div class="muted">Slug: ${bookmaker.slug}</div>
-              <div class="muted">Rank: ${bookmaker.rank_order} | Attivo: ${bookmaker.is_active ? 'Sì' : 'No'}</div>
+              <div class="muted">Rank: ${bookmaker.rank_order} | Active: ${bookmaker.is_active ? 'Yes' : 'No'}</div>
               <div class="muted">${bookmaker.short_description || ''}</div>
             </div>
           </div>
           <div class="row-actions">
-            <button class="btn-danger" data-id="${bookmaker.id}">Elimina</button>
+            <button class="btn-edit" data-action="edit">Edit</button>
+            <button class="btn-danger" data-action="delete">Delete</button>
           </div>
         `
 
-        const deleteBtn = item.querySelector('.btn-danger')
+        const editBtn = item.querySelector('[data-action="edit"]')
+        const deleteBtn = item.querySelector('[data-action="delete"]')
+
+        editBtn.addEventListener('click', () => {
+          fillForm(bookmaker)
+        })
+
         deleteBtn.addEventListener('click', async () => {
-          const conferma = confirm(`Vuoi eliminare ${bookmaker.name}?`)
-          if (!conferma) return
+          const confirmed = confirm(`Do you want to delete ${bookmaker.name}?`)
+          if (!confirmed) return
 
           const { error } = await supabase
             .from('bookmakers')
@@ -346,7 +438,11 @@
             return
           }
 
-          showMessage('Bookmaker eliminato con successo')
+          if (editingId === bookmaker.id) {
+            resetForm()
+          }
+
+          showMessage('Bookmaker deleted successfully')
           loadAdminBookmakers()
         })
 
@@ -372,17 +468,30 @@
         is_active: document.getElementById('is_active').value === 'true'
       }
 
-      const { error } = await supabase
-        .from('bookmakers')
-        .insert([payload])
+      let error = null
+
+      if (editingId) {
+        const response = await supabase
+          .from('bookmakers')
+          .update(payload)
+          .eq('id', editingId)
+
+        error = response.error
+      } else {
+        const response = await supabase
+          .from('bookmakers')
+          .insert([payload])
+
+        error = response.error
+      }
 
       if (error) {
         showMessage(error.message, 'error')
         return
       }
 
-      showMessage('Bookmaker salvato con successo')
-      bookmakerForm.reset()
+      showMessage(editingId ? 'Bookmaker updated successfully' : 'Bookmaker saved successfully')
+      resetForm()
       loadAdminBookmakers()
     })
 
