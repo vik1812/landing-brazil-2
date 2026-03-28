@@ -165,6 +165,7 @@
 
   async function loadBookmakers() {
     const container = document.getElementById('bookmakers-list')
+    container.innerHTML = '<p>TEST OK</p>'
 
     const { data, error } = await supabase
       .from('bookmakers')
