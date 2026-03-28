@@ -85,23 +85,30 @@
       </div>
 
       <div class="hero-card">
-        <div class="hero-card-header">
-          <span class="mini-badge">Top escolha</span>
-          <span class="rating">★ 4.9</span>
-        </div>
-        <div class="top-bookmaker">
-          <img src="https://www.google.com/s2/favicons?sz=128&domain_url=betano.bet.br" alt="Betano" />
-          <div>
-            <strong>Betano</strong>
-            <p>Bônus competitivo e boa experiência mobile</p>
-          </div>
-        </div>
-        <div class="hero-offer">
-          <span>Bônus em destaque</span>
-          <strong>Até R$ 500 + rodadas</strong>
-        </div>
-        <a class="btn btn-primary btn-full" href="https://betano.bet.br" target="_blank" rel="nofollow sponsored noopener">Acessar site</a>
-      </div>
+  <div class="hero-card-header">
+    <span class="mini-badge">Top choice</span>
+    <span class="rating" id="hero-rating">★ 4.9</span>
+  </div>
+
+  <div class="top-bookmaker">
+    <a id="hero-logo-link" href="#" target="_blank" rel="nofollow sponsored noopener">
+      <img id="hero-logo" src="https://www.google.com/s2/favicons?sz=128&domain_url=betano.bet.br" alt="Top bookmaker logo" />
+    </a>
+    <div>
+      <strong id="hero-name">Betano</strong>
+      <p id="hero-description">Bônus competitivo e boa experiência mobile</p>
+    </div>
+  </div>
+
+  <div class="hero-offer">
+    <span id="hero-promo-title">Featured bonus</span>
+    <strong id="hero-promo-text">Até R$ 500 + rodadas</strong>
+  </div>
+
+  <a id="hero-affiliate-link" class="btn btn-primary btn-full" href="https://betano.bet.br" target="_blank" rel="nofollow sponsored noopener">
+    Acessar site
+  </a>
+</div>
     </div>
   </header>
 
@@ -177,10 +184,28 @@
       return
     }
 
-    if (!data || data.length === 0) {
-      container.innerHTML = '<p>Nenhum bookmaker disponível.</p>'
-      return
-    }
+    const topBookmaker = data[0]
+
+if (topBookmaker) {
+  const heroName = document.getElementById('hero-name')
+  const heroDescription = document.getElementById('hero-description')
+  const heroPromoTitle = document.getElementById('hero-promo-title')
+  const heroPromoText = document.getElementById('hero-promo-text')
+  const heroAffiliateLink = document.getElementById('hero-affiliate-link')
+  const heroLogo = document.getElementById('hero-logo')
+  const heroLogoLink = document.getElementById('hero-logo-link')
+  const heroRating = document.getElementById('hero-rating')
+
+  if (heroName) heroName.textContent = topBookmaker.name ?? ''
+  if (heroDescription) heroDescription.textContent = topBookmaker.short_description ?? ''
+  if (heroPromoTitle) heroPromoTitle.textContent = topBookmaker.promo_title ?? 'Featured bonus'
+  if (heroPromoText) heroPromoText.textContent = topBookmaker.promo_text ?? ''
+  if (heroAffiliateLink) heroAffiliateLink.href = topBookmaker.affiliate_link ?? '#'
+  if (heroLogo) heroLogo.src = topBookmaker.logo_url || 'https://via.placeholder.com/64'
+  if (heroLogo) heroLogo.alt = `${topBookmaker.name ?? 'Top bookmaker'} logo`
+  if (heroLogoLink) heroLogoLink.href = topBookmaker.affiliate_link ?? '#'
+  if (heroRating) heroRating.textContent = `★ ${topBookmaker.rating ?? '-'}`
+}
 
     container.innerHTML = data.map((bookmaker, index) => {
   const features = bookmaker.features_text
@@ -197,7 +222,9 @@
 
       <div class="bookmaker-main">
         <div class="bookmaker-brand">
-          <img src="${bookmaker.logo_url || 'https://via.placeholder.com/64'}" alt="${bookmaker.name} logo" />
+          <a href="${bookmaker.affiliate_link}" target="_blank" rel="nofollow sponsored noopener">
+  <img src="${bookmaker.logo_url || 'https://via.placeholder.com/64'}" alt="${bookmaker.name} logo" />
+</a>
           <div>
             <h3>${bookmaker.name ?? ''}</h3>
             <p>${bookmaker.short_description ?? ''}</p>
