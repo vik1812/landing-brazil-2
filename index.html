@@ -182,29 +182,52 @@
       return
     }
 
-    container.innerHTML = data.map((bookmaker, index) => `
-      <article class="bookmaker-card ${index === 0 ? 'featured' : ''}">
-        <div class="bookmaker-rank">#${bookmaker.rank_order ?? index + 1}</div>
-        <div class="bookmaker-main">
-          <div class="bookmaker-brand">
-            <img src="${bookmaker.logo_url || 'https://via.placeholder.com/64'}" alt="${bookmaker.name} logo" />
-            <div>
-              <h3>${bookmaker.name ?? ''}</h3>
-              <p>${bookmaker.short_description ?? ''}</p>
-            </div>
-          </div>
-          <div class="bookmaker-offer">
-            <span>${bookmaker.promo_title ?? 'Bem-vindo'}</span>
-            <strong>${bookmaker.promo_text ?? ''}</strong>
+    container.innerHTML = data.map((bookmaker, index) => {
+  const features = bookmaker.features_text
+    ? bookmaker.features_text.split('|').map(item => item.trim()).filter(Boolean)
+    : []
+
+  const reviewLinkHtml = bookmaker.review_link && bookmaker.review_link !== '#'
+    ? `<a class="text-link" href="${bookmaker.review_link}">Ver review</a>`
+    : ''
+
+  return `
+    <article class="bookmaker-card ${index === 0 ? 'featured' : ''}">
+      <div class="bookmaker-rank">#${bookmaker.rank_order ?? index + 1}</div>
+
+      <div class="bookmaker-main">
+        <div class="bookmaker-brand">
+          <img src="${bookmaker.logo_url || 'https://via.placeholder.com/64'}" alt="${bookmaker.name} logo" />
+          <div>
+            <h3>${bookmaker.name ?? ''}</h3>
+            <p>${bookmaker.short_description ?? ''}</p>
           </div>
         </div>
-        <div class="bookmaker-side">
-          <div class="score">${bookmaker.rating ?? '-'}</div>
-          <a class="btn btn-primary" href="${bookmaker.affiliate_link}" target="_blank" rel="nofollow sponsored noopener">Jogar agora</a>
-          <a class="text-link" href="${bookmaker.review_link || '#'}">Ver review</a>
+
+        <div class="bookmaker-offer">
+          <span>${bookmaker.promo_title ?? 'Welcome offer'}</span>
+          <strong>${bookmaker.promo_text ?? ''}</strong>
         </div>
-      </article>
-    `).join('')
+
+        ${
+          features.length
+            ? `
+              <div class="bookmaker-features">
+                ${features.map(feature => `<span>${feature}</span>`).join('')}
+              </div>
+            `
+            : ''
+        }
+      </div>
+
+      <div class="bookmaker-side">
+        <div class="score">${bookmaker.rating ?? '-'}</div>
+        <a class="btn btn-primary" href="${bookmaker.affiliate_link}" target="_blank" rel="nofollow sponsored noopener">Jogar agora</a>
+        ${reviewLinkHtml}
+      </div>
+    </article>
+  `
+}).join('')
   }
 
   loadBookmakers()
