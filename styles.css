@@ -171,10 +171,6 @@ img {
   margin: 28px 0;
 }
 
-.bookmaker-brand a {
-  display: inline-flex;
-  align-items: center;
-}
 
 
 .btn {
@@ -449,6 +445,21 @@ img {
   gap: 16px;
 }
 
+.bookmaker-brand a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  min-height: 72px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 10px;
+  overflow: hidden;
+}
+
 .bookmaker-brand img {
   width: 72px;
   height: 72px;
@@ -560,10 +571,11 @@ img {
   }
 
   .bookmaker-brand img {
-    width: 62px;
-    height: 62px;
-    border-radius: 16px;
-  }
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
   .bookmaker-side {
     grid-template-columns: 1fr;
@@ -771,6 +783,15 @@ img {
     padding: 14px 16px;
     border-radius: 18px;
   }
+
+  .bookmaker-brand a {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    padding: 8px;
+  }
+}
 
   .site-logo {
     font-size: 18px;
