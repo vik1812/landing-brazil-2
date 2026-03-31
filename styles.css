@@ -422,8 +422,8 @@ img {
 }
 
 .bookmaker-rank {
-  width: 58px;
-  height: 58px;
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -456,16 +456,16 @@ img {
   flex-shrink: 0;
   border-radius: 18px;
   background: #ffffff;
-  padding: 10px;
+  padding: 0px;
   overflow: hidden;
 }
 
 .bookmaker-brand img {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 20px;
   background: #fff;
-  padding: 8px;
+  padding: 0px;
   flex-shrink: 0;
 }
 
